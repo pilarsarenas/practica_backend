@@ -8,14 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ediae.master.programacion.gestionusuario.service.GeneroModel;
+import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
 import es.ediae.master.programacion.gestionusuario.service.impl.GeneroServiceImpl;
-
-// import es.ediae.master.programacion.gestionusuario.dto.UsuarioPostDTO;
-// import es.ediae.master.programacion.gestionusuario.service.GeneroModel;
-// import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
-// import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
-// import es.ediae.master.programacion.gestionusuario.service.impl.GeneroServiceImpl;
-// import es.ediae.master.programacion.gestionusuario.service.impl.PuestoDeTrabajoServiceImpl;
+import es.ediae.master.programacion.gestionusuario.service.impl.PuestoDeTrabajoServiceImpl;
 // // import es.ediae.master.programacion.gestionusuario.service.impl.UsuarioServiceImpl;
 
 @RestController
@@ -30,46 +25,47 @@ public class UsuarioController {
         return generoService.obtenerGeneros();
     }
 
-    // @Autowired
-    // private PuestoDeTrabajoServiceImpl puestoDeTrabajoService;
+    @Autowired
+    private PuestoDeTrabajoServiceImpl puestoDeTrabajoService;
 
-    // @GetMapping("/puestosdetrabajo")
-    // public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo() {
-    //     return puestoDeTrabajoService.obtenerPuestoDeTrabajo();
-    // }
+    @GetMapping("/puestosdetrabajo")
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo() {
+        return puestoDeTrabajoService.obtenerPuestoDeTrabajo();
+    }
 
     // @Autowired
     // private UsuarioServiceImpl usuarioService;
 
     // @PostMapping("/login")
     // public boolean iniciarSesion(@RequestBody UsuarioPostDTO loginDTO) {
-    //     return usuarioService.iniciarSesion(
-    //             loginDTO.getNickUsuario(),
-    //             loginDTO.getContrasena());
+    // return usuarioService.iniciarSesion(
+    // loginDTO.getNickUsuario(),
+    // loginDTO.getContrasena());
     // }
 
     // @GetMapping
     // public List<UsuarioModel> obtenerUsuarios() {
-    //     return usuarioService.obtenerUsuarios();
+    // return usuarioService.obtenerUsuarios();
     // }
 
     // @GetMapping("/{usuarioId}")
     // public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId) {
-    //     return usuarioService.obtenerUsuario(usuarioId);
+    // return usuarioService.obtenerUsuario(usuarioId);
     // }
 
     // @PostMapping
     // public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario) {
-    //     return usuarioService.crearUsuario(usuario);
+    // return usuarioService.crearUsuario(usuario);
     // }
 
     // @PutMapping("/{id}")
-    // public UsuarioModel updateUsuario(@PathVariable Integer id, @RequestBody UsuarioModel usuario) {
-    //     return usuarioService.actualizarUsuario(id, usuario);
+    // public UsuarioModel updateUsuario(@PathVariable Integer id, @RequestBody
+    // UsuarioModel usuario) {
+    // return usuarioService.actualizarUsuario(id, usuario);
     // }
 
     // @DeleteMapping("/{id}")
     // public void eliminarUsuario(@PathVariable Integer id) {
-    //     usuarioService.eliminarUsuario(id);
+    // usuarioService.eliminarUsuario(id);
     // }
 }

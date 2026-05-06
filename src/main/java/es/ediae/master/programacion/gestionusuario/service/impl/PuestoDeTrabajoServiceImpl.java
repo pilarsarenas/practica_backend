@@ -1,0 +1,25 @@
+package es.ediae.master.programacion.gestionusuario.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import es.ediae.master.programacion.gestionusuario.repository.IPuestoDeTrabajoRepository;
+import es.ediae.master.programacion.gestionusuario.service.IPuestoDeTrabajoService;
+import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
+
+@Service
+public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
+
+    @Autowired
+    private IPuestoDeTrabajoRepository puestoDeTrabajoRepository;
+
+    @Override
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo() {
+     return puestoDeTrabajoRepository.findAll().stream()
+                .map(PuestoDeTrabajoModel::fromEntity)
+                .toList();
+                }
+
+}
