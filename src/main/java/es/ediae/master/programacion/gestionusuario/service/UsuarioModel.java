@@ -23,13 +23,14 @@ public class UsuarioModel {
     private LocalTime horaDesayuno;
     private GeneroEntity genero;
     private PuestoDeTrabajoEntity puestoDeTrabajo;
+    private boolean esAdmin;
 
     // --- Constructores ---
     public UsuarioModel() {}
 
     public UsuarioModel(Integer id, String nickUsuario, String contrasena, LocalDateTime fechaHoraCreacion,
             String nombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento,
-            LocalTime horaDesayuno, GeneroEntity genero, PuestoDeTrabajoEntity puestoDeTrabajo) {
+            LocalTime horaDesayuno, GeneroEntity genero, PuestoDeTrabajoEntity puestoDeTrabajo, boolean esAdmin) {
         this.id = id;
         this.nickUsuario = nickUsuario;
         this.contrasena = contrasena;
@@ -41,6 +42,7 @@ public class UsuarioModel {
         this.horaDesayuno = horaDesayuno;
         this.genero = genero;
         this.puestoDeTrabajo = puestoDeTrabajo;
+        this.esAdmin = esAdmin;
     }
 
     // --- Getters y Setters ---
@@ -132,6 +134,14 @@ public class UsuarioModel {
         this.puestoDeTrabajo = puestoDeTrabajo;
     }
 
+    public boolean isEsAdmin() {
+        return esAdmin;
+    }
+
+    public void setEsAdmin(boolean esAdmin) {
+        this.esAdmin = esAdmin;
+    }
+
         public static UsuarioModel fromEntity(UsuarioEntity usuarioEntity) {
     return new UsuarioModel(
         usuarioEntity.getId(),
@@ -144,7 +154,8 @@ public class UsuarioModel {
         usuarioEntity.getFechaNacimiento(),
         usuarioEntity.getHoraDesayuno(),
         usuarioEntity.getGenero(),
-        usuarioEntity.getPuestoDeTrabajo()
+        usuarioEntity.getPuestoDeTrabajo(),
+        usuarioEntity.isEsAdmin()
     );
 }
 
@@ -160,7 +171,8 @@ public class UsuarioModel {
             usuarioDTO.getFechaNacimiento(),
             usuarioDTO.getHoraDesayuno(),
             usuarioDTO.getGenero(),
-            usuarioDTO.getPuestoDeTrabajo()
+            usuarioDTO.getPuestoDeTrabajo(),
+            usuarioDTO.isEsAdmin()
         );
     }
 
@@ -176,7 +188,8 @@ public class UsuarioModel {
             usuarioPostDTO.getFechaNacimiento(),
             usuarioPostDTO.getHoraDesayuno(),
             usuarioPostDTO.getGenero(),
-            usuarioPostDTO.getPuestoDeTrabajo()
+            usuarioPostDTO.getPuestoDeTrabajo(),
+            usuarioPostDTO.isEsAdmin()
         );
     }
 

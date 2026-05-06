@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
-import es.ediae.master.programacion.gestionusuario.repository.UsuarioRepository;
+import es.ediae.master.programacion.gestionusuario.repository.IUsuarioRepository;
 import es.ediae.master.programacion.gestionusuario.service.IUsuarioService;
 import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 
@@ -15,7 +15,7 @@ import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 public class UsuarioServiceImpl implements IUsuarioService {
 
     @Autowired
-    private UsuarioRepository UsuarioRepository;
+    private IUsuarioRepository UsuarioRepository;
 
     @Override
     public List<UsuarioModel> obtenerUsuarios() {
@@ -46,6 +46,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         usuarioEntity.setHoraDesayuno(usuario.getHoraDesayuno());
         usuarioEntity.setGenero(usuario.getGenero());
         usuarioEntity.setPuestoDeTrabajo(usuario.getPuestoDeTrabajo());
+        usuarioEntity.setEsAdmin(usuario.isEsAdmin());
 
         return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
 
@@ -68,7 +69,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
             usuarioEntity.setHoraDesayuno(usuario.getHoraDesayuno());
             usuarioEntity.setGenero(usuario.getGenero());
             usuarioEntity.setPuestoDeTrabajo(usuario.getPuestoDeTrabajo());
-
+            usuarioEntity.setEsAdmin(usuario.isEsAdmin());
             return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
         } else {
             return null;

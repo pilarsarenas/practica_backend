@@ -45,6 +45,9 @@ public class UsuarioEntity {
     @Column(name = "hora_desayuno", nullable = true)
     private LocalTime horaDesayuno;
 
+    @Column(name = "es_admin", nullable = false)
+    private boolean esAdmin;
+
     @ManyToOne
     @JoinColumn(name = "genero_id", nullable = false)
     private GeneroEntity genero;
@@ -53,12 +56,10 @@ public class UsuarioEntity {
     @JoinColumn(name = "puesto_de_trabajo_id", nullable = true)
     private PuestoDeTrabajoEntity puestoDeTrabajo;
 
-    // @Column(name = "es_admin", nullable = false)
-    // private Boolean esAdmin;
-
     // --- Constructores ---
     public UsuarioEntity() {
     }
+
 
     // --- Getters y Setters ---
 
@@ -149,13 +150,14 @@ public class UsuarioEntity {
     public void setPuestoDeTrabajo(PuestoDeTrabajoEntity puestoDeTrabajo) {
         this.puestoDeTrabajo = puestoDeTrabajo;
     }
-    
-//     public Boolean getEsAdmin() {
-//     return esAdmin;
-// }
 
-// public void setEsAdmin(Boolean esAdmin) {
-//     this.esAdmin = esAdmin;
-// }
+    public boolean isEsAdmin() {
+        return esAdmin;
+    }
+
+    public void setEsAdmin(boolean esAdmin) {
+        this.esAdmin = esAdmin;
+    }
+    
 
 }

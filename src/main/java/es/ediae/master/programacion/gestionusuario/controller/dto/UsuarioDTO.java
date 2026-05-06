@@ -30,6 +30,7 @@ public class UsuarioDTO {
     @NotNull(message = "El género es obligatorio")
     private GeneroEntity genero;
     private PuestoDeTrabajoEntity puestoDeTrabajo;
+    private Boolean esAdmin;
 
     // --- Constructores ---
     public UsuarioDTO() {
@@ -38,7 +39,7 @@ public class UsuarioDTO {
     public UsuarioDTO(Integer id, String nickUsuario, LocalDateTime fechaHoraCreacion,
             String nombre, String primerApellido, String segundoApellido,
             LocalDate fechaNacimiento, LocalTime horaDesayuno,
-            GeneroEntity genero, PuestoDeTrabajoEntity puestoDeTrabajo) {
+            GeneroEntity genero, PuestoDeTrabajoEntity puestoDeTrabajo, Boolean esAdmin) {
         this.id = id;
         this.nickUsuario = nickUsuario;
         this.fechaHoraCreacion = fechaHoraCreacion;
@@ -49,6 +50,7 @@ public class UsuarioDTO {
         this.horaDesayuno = horaDesayuno;
         this.genero = genero;
         this.puestoDeTrabajo = puestoDeTrabajo;
+        this.esAdmin = esAdmin;
     }
 
     // --- Getters y Setters ---
@@ -140,6 +142,14 @@ public class UsuarioDTO {
         this.puestoDeTrabajo = puestoDeTrabajo;
     }
 
+    public Boolean isEsAdmin() {
+        return esAdmin;
+    }
+
+    public void setEsAdmin(Boolean esAdmin) {
+        this.esAdmin = esAdmin;
+    }
+
     public static UsuarioDTO fromModel(UsuarioModel usuarioModel) {
         return new UsuarioDTO(
                 usuarioModel.getId(),
@@ -151,7 +161,8 @@ public class UsuarioDTO {
                 usuarioModel.getFechaNacimiento(),
                 usuarioModel.getHoraDesayuno(),
                 usuarioModel.getGenero(),
-                usuarioModel.getPuestoDeTrabajo());
+                usuarioModel.getPuestoDeTrabajo(),
+                usuarioModel.isEsAdmin());
     }
 
 }

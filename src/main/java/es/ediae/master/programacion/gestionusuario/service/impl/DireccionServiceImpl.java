@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.ediae.master.programacion.gestionusuario.entity.DireccionEntity;
-import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IDireccionRepository;
-import es.ediae.master.programacion.gestionusuario.repository.UsuarioRepository;
 import es.ediae.master.programacion.gestionusuario.service.DireccionModel;
 import es.ediae.master.programacion.gestionusuario.service.IDireccionService;
-import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 
 @Service
 public class DireccionServiceImpl implements IDireccionService {

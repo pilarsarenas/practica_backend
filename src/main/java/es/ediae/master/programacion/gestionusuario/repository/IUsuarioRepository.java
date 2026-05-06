@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer> {
+public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Integer> {
     Optional<UsuarioEntity> findByNickUsuarioAndContrasena(String nickUsuario, String contrasena);
 }

@@ -28,14 +28,16 @@ public class UsuarioPostDTO {
     @NotNull(message = "El género es obligatorio")
     private GeneroEntity genero;
     private PuestoDeTrabajoEntity puestoDeTrabajo;
+    private boolean esAdmin;
 
     // --- Constructores ---
-    public UsuarioPostDTO() {}
+    public UsuarioPostDTO() {
+    }
 
-     public UsuarioPostDTO(String nickUsuario, String contrasena, LocalDateTime fechaHoraCreacion,
-                          String nombre, String primerApellido, String segundoApellido,
-                          LocalDate fechaNacimiento, LocalTime horaDesayuno,
-                          GeneroEntity genero, PuestoDeTrabajoEntity puestoDeTrabajo) {
+    public UsuarioPostDTO(String nickUsuario, String contrasena, LocalDateTime fechaHoraCreacion,
+            String nombre, String primerApellido, String segundoApellido,
+            LocalDate fechaNacimiento, LocalTime horaDesayuno,
+            GeneroEntity genero, PuestoDeTrabajoEntity puestoDeTrabajo, boolean esAdmin) {
 
         this.nickUsuario = nickUsuario;
         this.contrasena = contrasena;
@@ -47,6 +49,7 @@ public class UsuarioPostDTO {
         this.horaDesayuno = horaDesayuno;
         this.genero = genero;
         this.puestoDeTrabajo = puestoDeTrabajo;
+        this.esAdmin = esAdmin;
     }
 
     // --- Getters y Setters ---
@@ -131,5 +134,12 @@ public class UsuarioPostDTO {
         this.puestoDeTrabajo = puestoDeTrabajo;
     }
 
+    public boolean isEsAdmin() {
+        return esAdmin;
+    }
 
+    public void setEsAdmin(boolean esAdmin) {
+        this.esAdmin = esAdmin;
+
+    }
 }
