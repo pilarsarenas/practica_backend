@@ -4,12 +4,13 @@ spring:
   application:
     name: usuarios
   datasource:
-    url: ${MYSQL_DATABASE_URL}
-    username: ${MYSQL_DATABASE_USER}
-    password: ${MYSQL_DATABASE_PWD}
+        url: ${MYSQL_DATABASE_URL}
+        username: ${MYSQL_DATABASE_USERNAME}
+        password: ${MYSQL_DATABASE_PASSWORD}
+
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: ${HIBERNATE_DDL_AUTO}
     show-sql: true
     properties:
       hibernate:
@@ -20,5 +21,5 @@ spring:
     baseline-on-migrate: true
 springdoc:
   swagger-ui:
-    path: /misproductos.html
+    path: /practicafinalbackend.html
     operationsSorter: method
