@@ -10,5 +10,5 @@ public interface IUsuarioService {
     public UsuarioModel crearUsuario(UsuarioModel usuario);
     public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario);
     public void eliminarUsuario(Integer id);
-public boolean iniciarSesion(String nickUsuario, String contrasena);
+    public boolean iniciarSesion(String nickUsuario, String contrasena);
 }

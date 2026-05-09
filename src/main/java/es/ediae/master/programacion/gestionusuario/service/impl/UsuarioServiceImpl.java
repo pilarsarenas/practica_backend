@@ -36,6 +36,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
     public UsuarioModel crearUsuario(UsuarioModel usuario) {
         UsuarioEntity usuarioEntity = new UsuarioEntity();
 
+        if (UsuarioRepository.existsByNickUsuario(usuario.getNickUsuario())) {
+        throw new RuntimeException("El nickUsuario ya existe");
+    }
+
         usuarioEntity.setNickUsuario(usuario.getNickUsuario());
         usuarioEntity.setContrasena(usuario.getContrasena());
         usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
@@ -52,29 +56,43 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     }
 
-    @Override
-    public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario) {
-        Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
+@Override
+public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario) {
 
-        if (optionalUsuario.isPresent()) {
-            UsuarioEntity usuarioEntity = optionalUsuario.get();
+    Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
 
-            usuarioEntity.setNickUsuario(usuario.getNickUsuario());
-            usuarioEntity.setContrasena(usuario.getContrasena());
-            usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
-            usuarioEntity.setNombre(usuario.getNombre());
-            usuarioEntity.setPrimerApellido(usuario.getPrimerApellido());
-            usuarioEntity.setSegundoApellido(usuario.getSegundoApellido());
-            usuarioEntity.setFechaNacimiento(usuario.getFechaNacimiento());
-            usuarioEntity.setHoraDesayuno(usuario.getHoraDesayuno());
-            usuarioEntity.setGenero(usuario.getGenero());
-            usuarioEntity.setPuestoDeTrabajo(usuario.getPuestoDeTrabajo());
-            usuarioEntity.setEsAdmin(usuario.isEsAdmin());
-            return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
-        } else {
-            return null;
+    if (optionalUsuario.isPresent()) {
+
+        UsuarioEntity usuarioEntity = optionalUsuario.get();
+
+        Optional<UsuarioEntity> usuarioConMismoNick =
+                UsuarioRepository.findByNickUsuario(usuario.getNickUsuario());
+
+        if (usuarioConMismoNick.isPresent()
+                && !usuarioConMismoNick.get().getId().equals(id)) {
+
+            throw new RuntimeException("El nickUsuario ya existe");
         }
+
+        usuarioEntity.setNickUsuario(usuario.getNickUsuario());
+        usuarioEntity.setContrasena(usuario.getContrasena());
+        usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
+        usuarioEntity.setNombre(usuario.getNombre());
+        usuarioEntity.setPrimerApellido(usuario.getPrimerApellido());
+        usuarioEntity.setSegundoApellido(usuario.getSegundoApellido());
+        usuarioEntity.setFechaNacimiento(usuario.getFechaNacimiento());
+        usuarioEntity.setHoraDesayuno(usuario.getHoraDesayuno());
+        usuarioEntity.setGenero(usuario.getGenero());
+        usuarioEntity.setPuestoDeTrabajo(usuario.getPuestoDeTrabajo());
+        usuarioEntity.setEsAdmin(usuario.isEsAdmin());
+
+        return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
+
+    } else {
+
+        return null;
     }
+}
 
     @Override
     public void eliminarUsuario(Integer id) {

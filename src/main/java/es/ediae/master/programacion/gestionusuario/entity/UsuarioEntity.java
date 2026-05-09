@@ -21,7 +21,7 @@ public class UsuarioEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nick_usuario", nullable = false)
+    @Column(name = "nick_usuario", nullable = false, unique = true)
     private String nickUsuario;
 
     @Column(nullable = false)
