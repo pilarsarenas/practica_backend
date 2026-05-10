@@ -17,5 +17,5 @@ public interface IDireccionRepository extends JpaRepository<DireccionEntity, Int
     @Query("SELECT d FROM DireccionEntity d WHERE d.usuario.id = :usuarioId")
     List<DireccionEntity> buscarPorUsuarioId(Integer usuarioId);
 
-    Optional<DireccionEntity> findByUsuarioIdAndDireccionPrincipalTrue(Integer usuarioId);
+    List<DireccionEntity> findByUsuarioIdAndDireccionPrincipalTrue(Integer usuarioId);
 }

@@ -42,12 +42,14 @@ public class DireccionServiceImpl implements IDireccionService {
 
 private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer direccionExistenteId) {
         if (Boolean.TRUE.equals(direccion.getDireccionPrincipal()) && direccion.getUsuario() != null && direccion.getUsuario().getId() != null) {
-            Optional<DireccionEntity> direccionPrincipalExistente = DireccionRepository
+            List<DireccionEntity> direccionesPrincipales = DireccionRepository
                     .findByUsuarioIdAndDireccionPrincipalTrue(direccion.getUsuario().getId());
 
-            if (direccionPrincipalExistente.isPresent()
-                    && !direccionPrincipalExistente.get().getId().equals(direccionExistenteId)) {
-                throw new RuntimeException("Ya existe una dirección principal para este usuario");
+            if (!direccionesPrincipales.isEmpty()) {
+                if (direccionExistenteId == null || direccionesPrincipales.stream()
+                        .anyMatch(d -> !d.getId().equals(direccionExistenteId))) {
+                    throw new RuntimeException("Ya existe una dirección principal para este usuario");
+                }
             }
         }
     }
@@ -57,6 +59,8 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
         if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
             return null;
         }
+
+        validarDireccionPrincipalUnica(direccion, null);
 
         DireccionEntity direccionEntity = new DireccionEntity();
 
