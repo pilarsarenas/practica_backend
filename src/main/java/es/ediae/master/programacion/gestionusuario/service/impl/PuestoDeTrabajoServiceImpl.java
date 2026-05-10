@@ -19,8 +19,8 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
     private UsuarioServiceImpl usuarioService;
 
     @Override
-    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(String nickUsuario, String nickContraseña) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(String nickUsuario, String nickContrasena) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
      return puestoDeTrabajoRepository.findAll().stream()

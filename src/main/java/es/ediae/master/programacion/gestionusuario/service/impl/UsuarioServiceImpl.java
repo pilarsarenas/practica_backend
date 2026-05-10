@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IUsuarioRepository;
@@ -18,8 +20,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private IUsuarioRepository UsuarioRepository;
 
     @Override
-    public List<UsuarioModel> obtenerUsuarios(String nickUsuario, String nickContraseña) {
-        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+    public List<UsuarioModel> obtenerUsuarios(String nickUsuario, String nickContrasena) {
+        if (!iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
         return UsuarioRepository.findAll().stream()
@@ -28,8 +30,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public UsuarioModel obtenerUsuario(Integer id, String nickUsuario, String nickContraseña) {
-        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+    public UsuarioModel obtenerUsuario(Integer id, String nickUsuario, String nickContrasena) {
+        if (!iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
         return UsuarioRepository.findById(id)
@@ -38,15 +40,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public UsuarioModel crearUsuario(UsuarioModel usuario, String nickUsuario, String nickContraseña) {
-        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+    public UsuarioModel crearUsuario(UsuarioModel usuario, String nickUsuario, String nickContrasena) {
+        if (!iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
         UsuarioEntity usuarioEntity = new UsuarioEntity();
 
         if (UsuarioRepository.existsByNickUsuario(usuario.getNickUsuario())) {
-        throw new RuntimeException("El nickUsuario ya existe");
-    }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nickUsuario ya existe");
+        }
 
         usuarioEntity.setNickUsuario(usuario.getNickUsuario());
         usuarioEntity.setContrasena(usuario.getContrasena());
@@ -65,8 +67,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
 @Override
-public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String nickUsuario, String nickContraseña) {
-    if (!iniciarSesion(nickUsuario, nickContraseña)) {
+public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String nickUsuario, String nickContrasena) {
+    if (!iniciarSesion(nickUsuario, nickContrasena)) {
         return null;
     }
     Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
@@ -105,8 +107,8 @@ public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String n
 }
 
     @Override
-    public void eliminarUsuario(Integer id, String nickUsuario, String nickContraseña) {
-        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+    public void eliminarUsuario(Integer id, String nickUsuario, String nickContrasena) {
+        if (!iniciarSesion(nickUsuario, nickContrasena)) {
             return;
         }
         UsuarioRepository.deleteById(id);

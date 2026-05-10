@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ediae.master.programacion.gestionusuario.controller.dto.UsuarioPostDTO;
-import es.ediae.master.programacion.gestionusuario.service.GeneroModel;
 import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
 import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
-import es.ediae.master.programacion.gestionusuario.service.impl.GeneroServiceImpl;
 import es.ediae.master.programacion.gestionusuario.service.impl.PuestoDeTrabajoServiceImpl;
 import es.ediae.master.programacion.gestionusuario.service.impl.UsuarioServiceImpl;
 
@@ -25,20 +23,13 @@ import es.ediae.master.programacion.gestionusuario.service.impl.UsuarioServiceIm
 @RequestMapping("/api/v1/usuarios")
 public class UsuarioController {
 
-    @Autowired
-    private GeneroServiceImpl generoService;
-
-    @GetMapping("/generos")
-    public List<GeneroModel> obtenerGeneros(@RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        return generoService.obtenerGeneros(nickUsuario, nickContraseña);
-    }
 
     @Autowired
     private PuestoDeTrabajoServiceImpl puestoDeTrabajoService;
 
     @GetMapping("/puestosdetrabajo")
-    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(@RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        return puestoDeTrabajoService.obtenerPuestoDeTrabajo(nickUsuario, nickContraseña);
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(@RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        return puestoDeTrabajoService.obtenerPuestoDeTrabajo(nickUsuario, nickContrasena);
     }
 
     @Autowired
@@ -52,28 +43,28 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<UsuarioModel> obtenerUsuarios(@RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-    return usuarioService.obtenerUsuarios(nickUsuario, nickContraseña);
+    public List<UsuarioModel> obtenerUsuarios(@RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+    return usuarioService.obtenerUsuarios(nickUsuario, nickContrasena);
     }
 
     @GetMapping("/{usuarioId}")
-    public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-    return usuarioService.obtenerUsuario(usuarioId, nickUsuario, nickContraseña);
+    public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+    return usuarioService.obtenerUsuario(usuarioId, nickUsuario, nickContrasena);
     }
 
     @PostMapping
-    public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-    return usuarioService.crearUsuario(usuario, nickUsuario, nickContraseña);
+    public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+    return usuarioService.crearUsuario(usuario, nickUsuario, nickContrasena);
     }
 
     @PutMapping("/{id}")
     public UsuarioModel updateUsuario(@PathVariable Integer id, @RequestBody
-    UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-    return usuarioService.actualizarUsuario(id, usuario, nickUsuario, nickContraseña);
+    UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+    return usuarioService.actualizarUsuario(id, usuario, nickUsuario, nickContrasena);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-    usuarioService.eliminarUsuario(id, nickUsuario, nickContraseña);
+    public void eliminarUsuario(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+    usuarioService.eliminarUsuario(id, nickUsuario, nickContrasena);
     }
 }

@@ -24,28 +24,28 @@ public class DireccionController {
     private DireccionServiceImpl direccionService;
 
     @GetMapping("/usuario/{usuarioId}")
-    public List<DireccionModel> obtenerDirecciones(@PathVariable Integer usuarioId, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        return direccionService.obtenerDirecciones(usuarioId, nickUsuario, nickContraseña);
+    public List<DireccionModel> obtenerDirecciones(@PathVariable Integer usuarioId, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        return direccionService.obtenerDirecciones(usuarioId, nickUsuario, nickContrasena);
     }
 
 
    @GetMapping("/{id}")
-    public DireccionModel obtenerDireccion(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        return direccionService.obtenerDireccion(id, nickUsuario, nickContraseña);
+    public DireccionModel obtenerDireccion(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        return direccionService.obtenerDireccion(id, nickUsuario, nickContrasena);
     }
 
     @PostMapping("/usuario/{usuarioId}")
-    public DireccionModel crearDireccion(@RequestBody DireccionModel direccion, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        return direccionService.crearDireccion(direccion, nickUsuario, nickContraseña);
+    public DireccionModel crearDireccion(@RequestBody DireccionModel direccion, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        return direccionService.crearDireccion(direccion, nickUsuario, nickContrasena);
     }
 
     @PutMapping("/{id}")
-    public DireccionModel actualizarDireccion(@PathVariable Integer id, @RequestBody DireccionModel direccion, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        return direccionService.actualizarDireccion(id, direccion, nickUsuario, nickContraseña);
+    public DireccionModel actualizarDireccion(@PathVariable Integer id, @RequestBody DireccionModel direccion, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        return direccionService.actualizarDireccion(id, direccion, nickUsuario, nickContrasena);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarDireccion(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
-        direccionService.eliminarDireccion(id, nickUsuario, nickContraseña);
+    public void eliminarDireccion(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        direccionService.eliminarDireccion(id, nickUsuario, nickContrasena);
     }
 }

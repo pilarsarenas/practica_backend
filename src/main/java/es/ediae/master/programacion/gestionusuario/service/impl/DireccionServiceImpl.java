@@ -21,8 +21,8 @@ public class DireccionServiceImpl implements IDireccionService {
     private UsuarioServiceImpl usuarioService;
 
     @Override
-    public List<DireccionModel> obtenerDirecciones(Integer usuarioId, String nickUsuario, String nickContraseña) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+    public List<DireccionModel> obtenerDirecciones(Integer usuarioId, String nickUsuario, String nickContrasena) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
         return DireccionRepository.buscarPorUsuarioId(usuarioId).stream()
@@ -31,8 +31,8 @@ public class DireccionServiceImpl implements IDireccionService {
     }
 
     @Override
-    public DireccionModel obtenerDireccion(Integer id, String nickUsuario, String nickContraseña) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+    public DireccionModel obtenerDireccion(Integer id, String nickUsuario, String nickContrasena) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
         return DireccionRepository.findById(id)
@@ -55,8 +55,8 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
     }
 
     @Override
-    public DireccionModel crearDireccion(DireccionModel direccion, String nickUsuario, String nickContraseña) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+    public DireccionModel crearDireccion(DireccionModel direccion, String nickUsuario, String nickContrasena) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
 
@@ -74,8 +74,8 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
     }
 
     @Override
-    public DireccionModel actualizarDireccion(Integer id, DireccionModel direccion, String nickUsuario, String nickContraseña) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+    public DireccionModel actualizarDireccion(Integer id, DireccionModel direccion, String nickUsuario, String nickContrasena) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
             return null;
         }
         Optional<DireccionEntity> optionalDireccion = DireccionRepository.findById(id);
@@ -97,8 +97,8 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
     }
 
     @Override
-    public void eliminarDireccion(Integer id, String nickUsuario, String nickContraseña) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+    public void eliminarDireccion(Integer id, String nickUsuario, String nickContrasena) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
             return;
         }
         DireccionRepository.deleteById(id);

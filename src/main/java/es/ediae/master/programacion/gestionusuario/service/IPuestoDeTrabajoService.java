@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IPuestoDeTrabajoService {
 
-    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(String nickUsuario, String nickContraseña);
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(String nickUsuario, String nickContrasena);
 
 }

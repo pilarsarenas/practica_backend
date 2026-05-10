@@ -13,7 +13,7 @@ public class UsuarioPostDTO {
 
     @NotBlank(message = "El nick de usuario es obligatorio")
     private String nickUsuario;
-    @NotBlank(message = "La contraseña no puede estar vacía")
+    @NotBlank(message = "La contrasena no puede estar vacía")
     private String contrasena;
     @NotNull(message = "La fecha de creación es obligatoria")
     private LocalDateTime fechaHoraCreacion;
