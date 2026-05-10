@@ -24,13 +24,13 @@ public class UsuarioEntity {
     @Column(name = "nick_usuario", nullable = false, unique = true)
     private String nickUsuario;
 
-    @Column(nullable = false)
+    @Column(name = "contrasena", nullable = false)
     private String contrasena;
 
-    @Column(name = "fecha_hora_creacion", nullable = true)
+    @Column(name = "fecha_hora_creacion", nullable = false)
     private LocalDateTime fechaHoraCreacion;
 
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @Column(name = "primer_apellido", nullable = false)

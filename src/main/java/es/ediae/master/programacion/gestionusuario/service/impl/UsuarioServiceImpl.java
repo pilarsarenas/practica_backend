@@ -18,22 +18,30 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private IUsuarioRepository UsuarioRepository;
 
     @Override
-    public List<UsuarioModel> obtenerUsuarios() {
+    public List<UsuarioModel> obtenerUsuarios(String nickUsuario, String nickContraseña) {
+        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
         return UsuarioRepository.findAll().stream()
                 .map(UsuarioModel::fromEntity)
                 .toList();
     }
 
     @Override
-    public UsuarioModel obtenerUsuario(Integer id) {
-
+    public UsuarioModel obtenerUsuario(Integer id, String nickUsuario, String nickContraseña) {
+        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
         return UsuarioRepository.findById(id)
                 .map(UsuarioModel::fromEntity)
                 .orElse(null);
     }
 
     @Override
-    public UsuarioModel crearUsuario(UsuarioModel usuario) {
+    public UsuarioModel crearUsuario(UsuarioModel usuario, String nickUsuario, String nickContraseña) {
+        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
         UsuarioEntity usuarioEntity = new UsuarioEntity();
 
         if (UsuarioRepository.existsByNickUsuario(usuario.getNickUsuario())) {
@@ -57,8 +65,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
 @Override
-public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario) {
-
+public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String nickUsuario, String nickContraseña) {
+    if (!iniciarSesion(nickUsuario, nickContraseña)) {
+        return null;
+    }
     Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
 
     if (optionalUsuario.isPresent()) {
@@ -95,7 +105,10 @@ public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario) {
 }
 
     @Override
-    public void eliminarUsuario(Integer id) {
+    public void eliminarUsuario(Integer id, String nickUsuario, String nickContraseña) {
+        if (!iniciarSesion(nickUsuario, nickContraseña)) {
+            return;
+        }
         UsuarioRepository.deleteById(id);
     }
 

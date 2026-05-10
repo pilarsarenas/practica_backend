@@ -15,8 +15,14 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
     @Autowired
     private IPuestoDeTrabajoRepository puestoDeTrabajoRepository;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     @Override
-    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo() {
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
      return puestoDeTrabajoRepository.findAll().stream()
                 .map(PuestoDeTrabajoModel::fromEntity)
                 .toList();

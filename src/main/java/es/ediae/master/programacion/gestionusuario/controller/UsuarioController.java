@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ediae.master.programacion.gestionusuario.controller.dto.UsuarioPostDTO;
@@ -28,16 +29,16 @@ public class UsuarioController {
     private GeneroServiceImpl generoService;
 
     @GetMapping("/generos")
-    public List<GeneroModel> obtenerGeneros() {
-        return generoService.obtenerGeneros();
+    public List<GeneroModel> obtenerGeneros(@RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+        return generoService.obtenerGeneros(nickUsuario, nickContraseña);
     }
 
     @Autowired
     private PuestoDeTrabajoServiceImpl puestoDeTrabajoService;
 
     @GetMapping("/puestosdetrabajo")
-    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo() {
-        return puestoDeTrabajoService.obtenerPuestoDeTrabajo();
+    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(@RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+        return puestoDeTrabajoService.obtenerPuestoDeTrabajo(nickUsuario, nickContraseña);
     }
 
     @Autowired
@@ -51,28 +52,28 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<UsuarioModel> obtenerUsuarios() {
-    return usuarioService.obtenerUsuarios();
+    public List<UsuarioModel> obtenerUsuarios(@RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+    return usuarioService.obtenerUsuarios(nickUsuario, nickContraseña);
     }
 
     @GetMapping("/{usuarioId}")
-    public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId) {
-    return usuarioService.obtenerUsuario(usuarioId);
+    public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+    return usuarioService.obtenerUsuario(usuarioId, nickUsuario, nickContraseña);
     }
 
     @PostMapping
-    public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario) {
-    return usuarioService.crearUsuario(usuario);
+    public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+    return usuarioService.crearUsuario(usuario, nickUsuario, nickContraseña);
     }
 
     @PutMapping("/{id}")
     public UsuarioModel updateUsuario(@PathVariable Integer id, @RequestBody
-    UsuarioModel usuario) {
-    return usuarioService.actualizarUsuario(id, usuario);
+    UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+    return usuarioService.actualizarUsuario(id, usuario, nickUsuario, nickContraseña);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable Integer id) {
-    usuarioService.eliminarUsuario(id);
+    public void eliminarUsuario(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContraseña) {
+    usuarioService.eliminarUsuario(id, nickUsuario, nickContraseña);
     }
 }

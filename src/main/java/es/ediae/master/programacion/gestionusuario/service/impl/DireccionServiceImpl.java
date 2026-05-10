@@ -17,24 +17,47 @@ public class DireccionServiceImpl implements IDireccionService {
     @Autowired
     private IDireccionRepository DireccionRepository;
 
-    @Override
-    public List<DireccionModel> obtenerDirecciones(Integer usuarioId) {
-    return DireccionRepository.findById(usuarioId).stream()
-            .map(DireccionModel::fromEntity)
-            .toList();
-}
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
 
     @Override
-    public DireccionModel obtenerDireccion(Integer id) {
+    public List<DireccionModel> obtenerDirecciones(Integer usuarioId, String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
+        return DireccionRepository.buscarPorUsuarioId(usuarioId).stream()
+                .map(DireccionModel::fromEntity)
+                .toList();
+    }
 
+    @Override
+    public DireccionModel obtenerDireccion(Integer id, String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
         return DireccionRepository.findById(id)
                 .map(DireccionModel::fromEntity)
                 .orElse(null);
     }
 
-@Override
-public DireccionModel crearDireccion(DireccionModel direccion) {
-    
+private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer direccionExistenteId) {
+        if (Boolean.TRUE.equals(direccion.getDireccionPrincipal()) && direccion.getUsuario() != null && direccion.getUsuario().getId() != null) {
+            Optional<DireccionEntity> direccionPrincipalExistente = DireccionRepository
+                    .findByUsuarioIdAndDireccionPrincipalTrue(direccion.getUsuario().getId());
+
+            if (direccionPrincipalExistente.isPresent()
+                    && !direccionPrincipalExistente.get().getId().equals(direccionExistenteId)) {
+                throw new RuntimeException("Ya existe una dirección principal para este usuario");
+            }
+        }
+    }
+
+    @Override
+    public DireccionModel crearDireccion(DireccionModel direccion, String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
+
         DireccionEntity direccionEntity = new DireccionEntity();
 
         direccionEntity.setNombreCalle(direccion.getNombreCalle());
@@ -47,10 +70,15 @@ public DireccionModel crearDireccion(DireccionModel direccion) {
     }
 
     @Override
-    public DireccionModel actualizarDireccion(Integer id, DireccionModel direccion) {
+    public DireccionModel actualizarDireccion(Integer id, DireccionModel direccion, String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
         Optional<DireccionEntity> optionalDireccion = DireccionRepository.findById(id);
 
         if (optionalDireccion.isPresent()) {
+            validarDireccionPrincipalUnica(direccion, id);
+
             DireccionEntity direccionEntity = optionalDireccion.get();
 
             direccionEntity.setNombreCalle(direccion.getNombreCalle());
@@ -65,7 +93,10 @@ public DireccionModel crearDireccion(DireccionModel direccion) {
     }
 
     @Override
-    public void eliminarDireccion(Integer id) {
+    public void eliminarDireccion(Integer id, String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return;
+        }
         DireccionRepository.deleteById(id);
     }
 

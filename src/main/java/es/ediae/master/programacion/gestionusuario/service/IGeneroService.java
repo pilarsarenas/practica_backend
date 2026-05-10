@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IGeneroService {
 
-    public List<GeneroModel> obtenerGeneros();
+    public List<GeneroModel> obtenerGeneros(String nickUsuario, String nickContraseña);
 
 }

@@ -15,8 +15,14 @@ public class GeneroServiceImpl implements IGeneroService {
     @Autowired
     private IGeneroRepository generoRepository;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     @Override
-    public List<GeneroModel> obtenerGeneros() {
+    public List<GeneroModel> obtenerGeneros(String nickUsuario, String nickContraseña) {
+        if (!usuarioService.iniciarSesion(nickUsuario, nickContraseña)) {
+            return null;
+        }
      return generoRepository.findAll().stream()
                 .map(GeneroModel::fromEntity)
                 .toList();
