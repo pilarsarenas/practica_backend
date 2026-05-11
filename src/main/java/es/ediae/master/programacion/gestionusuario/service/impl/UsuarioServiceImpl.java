@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IUsuarioRepository;
 import es.ediae.master.programacion.gestionusuario.service.IUsuarioService;
+import es.ediae.master.programacion.gestionusuario.service.LoginService;
 import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 
 @Service
@@ -19,11 +20,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Autowired
     private IUsuarioRepository UsuarioRepository;
 
+    @Autowired
+    private LoginService loginService;
+
     @Override
     public List<UsuarioModel> obtenerUsuarios(String nickUsuario, String nickContrasena) {
-        if (!iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+         loginService.verificar(nickUsuario, nickContrasena);
         return UsuarioRepository.findAll().stream()
                 .map(UsuarioModel::fromEntity)
                 .toList();
@@ -31,9 +33,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public UsuarioModel obtenerUsuario(Integer id, String nickUsuario, String nickContrasena) {
-        if (!iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+         loginService.verificar(nickUsuario, nickContrasena);
         return UsuarioRepository.findById(id)
                 .map(UsuarioModel::fromEntity)
                 .orElse(null);
@@ -41,9 +41,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public UsuarioModel crearUsuario(UsuarioModel usuario, String nickUsuario, String nickContrasena) {
-        if (!iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+         loginService.verificar(nickUsuario, nickContrasena);
         UsuarioEntity usuarioEntity = new UsuarioEntity();
 
         if (UsuarioRepository.existsByNickUsuario(usuario.getNickUsuario())) {
@@ -68,9 +66,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 @Override
 public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String nickUsuario, String nickContrasena) {
-    if (!iniciarSesion(nickUsuario, nickContrasena)) {
-        return null;
-    }
+    loginService.verificar(nickUsuario, nickContrasena);
     Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
 
     if (optionalUsuario.isPresent()) {
@@ -108,9 +104,7 @@ public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String n
 
     @Override
     public void eliminarUsuario(Integer id, String nickUsuario, String nickContrasena) {
-        if (!iniciarSesion(nickUsuario, nickContrasena)) {
-            return;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
         UsuarioRepository.deleteById(id);
     }
 

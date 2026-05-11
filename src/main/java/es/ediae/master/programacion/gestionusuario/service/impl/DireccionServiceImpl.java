@@ -10,6 +10,7 @@ import es.ediae.master.programacion.gestionusuario.entity.DireccionEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IDireccionRepository;
 import es.ediae.master.programacion.gestionusuario.service.DireccionModel;
 import es.ediae.master.programacion.gestionusuario.service.IDireccionService;
+import es.ediae.master.programacion.gestionusuario.service.LoginService;
 
 @Service
 public class DireccionServiceImpl implements IDireccionService {
@@ -20,21 +21,21 @@ public class DireccionServiceImpl implements IDireccionService {
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
+    @Autowired
+    private LoginService loginService;
+
     @Override
     public List<DireccionModel> obtenerDirecciones(Integer usuarioId, String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
-        return DireccionRepository.buscarPorUsuarioId(usuarioId).stream()
+       loginService.verificar(nickUsuario, nickContrasena);
+        
+       return DireccionRepository.buscarPorUsuarioId(usuarioId).stream()
                 .map(DireccionModel::fromEntity)
                 .toList();
     }
 
     @Override
     public DireccionModel obtenerDireccion(Integer id, String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
         return DireccionRepository.findById(id)
                 .map(DireccionModel::fromEntity)
                 .orElse(null);
@@ -56,9 +57,7 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
 
     @Override
     public DireccionModel crearDireccion(DireccionModel direccion, String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
 
         validarDireccionPrincipalUnica(direccion, null);
 
@@ -75,9 +74,7 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
 
     @Override
     public DireccionModel actualizarDireccion(Integer id, DireccionModel direccion, String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
         Optional<DireccionEntity> optionalDireccion = DireccionRepository.findById(id);
 
         if (optionalDireccion.isPresent()) {
@@ -98,9 +95,7 @@ private void validarDireccionPrincipalUnica(DireccionModel direccion, Integer di
 
     @Override
     public void eliminarDireccion(Integer id, String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
         DireccionRepository.deleteById(id);
     }
 

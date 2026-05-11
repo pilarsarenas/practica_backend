@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import es.ediae.master.programacion.gestionusuario.entity.PuestoDeTrabajoEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IPuestoDeTrabajoRepository;
 import es.ediae.master.programacion.gestionusuario.service.IPuestoDeTrabajoService;
+import es.ediae.master.programacion.gestionusuario.service.LoginService;
 import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
 
 @Service
@@ -20,11 +21,13 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
+    @Autowired
+    private LoginService loginService;
+
     @Override
     public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+      loginService.verificar(nickUsuario, nickContrasena);
+        
      return puestoDeTrabajoRepository.findAll().stream()
                 .map(PuestoDeTrabajoModel::fromEntity)
                 .toList();
@@ -32,9 +35,7 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
 
     @Override
     public PuestoDeTrabajoModel obtenerPuestoDeTrabajo(Integer id, String nickUsuario, String nickContrasena) {
-         if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+         loginService.verificar(nickUsuario, nickContrasena);
         return puestoDeTrabajoRepository.findById(id)
                 .map(PuestoDeTrabajoModel::fromEntity)
                 .orElse(null);
@@ -43,9 +44,8 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
     @Override
     public PuestoDeTrabajoModel crearPuestoDeTrabajo(PuestoDeTrabajoModel puesto, String nickUsuario,
             String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
+        
         PuestoDeTrabajoEntity puestoDeTrabajoEntity = new PuestoDeTrabajoEntity();
 
         if (puestoDeTrabajoRepository.existsByNombre(puesto.getNombre())) {
@@ -59,10 +59,9 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
     @Override
     public PuestoDeTrabajoModel actualizarPuestoDeTrabajo(Integer id, PuestoDeTrabajoModel puesto, String nickUsuario,
             String nickContrasena) {
-         if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return null;
-        }
-        Optional<PuestoDeTrabajoEntity> optionalPuestoDeTrabajo = puestoDeTrabajoRepository.findById(id);
+         loginService.verificar(nickUsuario, nickContrasena);
+        
+         Optional<PuestoDeTrabajoEntity> optionalPuestoDeTrabajo = puestoDeTrabajoRepository.findById(id);
 
         if (optionalPuestoDeTrabajo.isPresent()) {
 
@@ -86,9 +85,7 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
 
     @Override
     public void eliminarPuestoDeTrabajo(Integer id, String nickUsuario, String nickContrasena) {
-        if (!usuarioService.iniciarSesion(nickUsuario, nickContrasena)) {
-            return;
-        }
+        loginService.verificar(nickUsuario, nickContrasena);
         puestoDeTrabajoRepository.deleteById(id);
     }
 
