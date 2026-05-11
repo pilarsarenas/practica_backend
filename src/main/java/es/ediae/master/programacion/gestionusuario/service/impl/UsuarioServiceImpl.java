@@ -47,7 +47,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
         if (UsuarioRepository.existsByNickUsuarioIgnoreCase(usuario.getNickUsuario())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nickUsuario ya existe");
         }
-
         usuarioEntity.setNickUsuario(usuario.getNickUsuario());
         usuarioEntity.setContrasena(usuario.getContrasena());
         usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
@@ -73,11 +72,12 @@ public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String n
 
         UsuarioEntity usuarioEntity = optionalUsuario.get();
 
-        Optional<UsuarioEntity> usuarioConMismoNick =
-                UsuarioRepository.findByNickUsuarioIgnoreCase(usuario.getNickUsuario());
+        UsuarioEntity usuarioConMismoNick = UsuarioRepository
+                .findByNickUsuarioIgnoreCase(usuario.getNickUsuario())
+                .orElse(null);
 
-        if (usuarioConMismoNick.isPresent()
-                && !usuarioConMismoNick.get().getId().equals(id)) {
+        if (usuarioConMismoNick != null
+                && !usuarioConMismoNick.getId().equals(id)) {
 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nickUsuario ya existe");
         }
