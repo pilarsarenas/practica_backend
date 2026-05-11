@@ -1,6 +1,8 @@
 package es.ediae.master.programacion.gestionusuario.service;
 
+
 import es.ediae.master.programacion.gestionusuario.controller.dto.PuestoDeTrabajoDTO;
+import es.ediae.master.programacion.gestionusuario.controller.dto.PuestoDeTrabajoPostDTO;
 import es.ediae.master.programacion.gestionusuario.entity.PuestoDeTrabajoEntity;
 
 public class PuestoDeTrabajoModel {
@@ -39,5 +41,11 @@ public class PuestoDeTrabajoModel {
     }
     public static PuestoDeTrabajoModel fromDTO(PuestoDeTrabajoDTO puestoDeTrabajoDTO) {
         return new PuestoDeTrabajoModel(puestoDeTrabajoDTO.getId(), puestoDeTrabajoDTO.getNombre());
+    }
+       public static PuestoDeTrabajoModel fromPostDTO(PuestoDeTrabajoPostDTO puestoDeTrabajoPostDTO) {
+        return new PuestoDeTrabajoModel(
+            null,
+            puestoDeTrabajoPostDTO.getNombre()
+        );
     }
 }

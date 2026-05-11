@@ -1,5 +1,6 @@
 package es.ediae.master.programacion.gestionusuario.controller.dto;
 
+import es.ediae.master.programacion.gestionusuario.service.GeneroModel;
 import jakarta.validation.constraints.NotBlank;
 
 public class GeneroDTO {
@@ -34,4 +35,12 @@ public class GeneroDTO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+     public static GeneroDTO fromModel(GeneroModel generoModel) {
+        return new GeneroDTO(
+                generoModel.getId(),
+                generoModel.getNombre()
+        );
+    }
+
 }

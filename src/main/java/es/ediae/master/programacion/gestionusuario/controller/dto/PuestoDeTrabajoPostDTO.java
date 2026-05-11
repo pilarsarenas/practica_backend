@@ -1,18 +1,12 @@
 package es.ediae.master.programacion.gestionusuario.controller.dto;
 
-import es.ediae.master.programacion.gestionusuario.entity.PuestoDeTrabajoEntity;
 import jakarta.validation.constraints.NotBlank;
 
-public class PuestoDeTrabajoDTO {
+public class PuestoDeTrabajoPostDTO {
 
     private Integer id;
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
-
-    public PuestoDeTrabajoDTO(Integer id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
 
     public Integer getId() {
         return id;
@@ -28,11 +22,5 @@ public class PuestoDeTrabajoDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public static PuestoDeTrabajoDTO fromModel(PuestoDeTrabajoEntity puestoDeTrabajoEntity) {
-        return new PuestoDeTrabajoDTO(
-                puestoDeTrabajoEntity.getId(),
-                puestoDeTrabajoEntity.getNombre());
     }
 }

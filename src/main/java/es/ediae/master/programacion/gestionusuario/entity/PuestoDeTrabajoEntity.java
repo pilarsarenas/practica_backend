@@ -14,7 +14,7 @@ public class PuestoDeTrabajoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
     // --- Constructores ---

@@ -3,6 +3,7 @@ package es.ediae.master.programacion.gestionusuario.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,23 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ediae.master.programacion.gestionusuario.controller.dto.UsuarioPostDTO;
-import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
 import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
-import es.ediae.master.programacion.gestionusuario.service.impl.PuestoDeTrabajoServiceImpl;
 import es.ediae.master.programacion.gestionusuario.service.impl.UsuarioServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioController {
 
-
-    @Autowired
-    private PuestoDeTrabajoServiceImpl puestoDeTrabajoService;
-
-    @GetMapping("/puestosdetrabajo")
-    public List<PuestoDeTrabajoModel> obtenerPuestoDeTrabajo(@RequestParam String nickUsuario, @RequestParam String nickContrasena) {
-        return puestoDeTrabajoService.obtenerPuestoDeTrabajo(nickUsuario, nickContrasena);
-    }
 
     @Autowired
     private UsuarioServiceImpl usuarioService;
