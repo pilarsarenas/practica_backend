@@ -12,4 +12,6 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Integer
     Optional<UsuarioEntity> findByNickUsuarioAndContrasena(String nickUsuario, String contrasena);
     boolean existsByNickUsuario(String nickUsuario);
     Optional<UsuarioEntity> findByNickUsuario(String nickUsuario);
+    Optional<UsuarioEntity> findByNickUsuarioIgnoreCase(String nickUsuario);
+    boolean existsByNickUsuarioIgnoreCase(String nickUsuario);
 }

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import es.ediae.master.programacion.gestionusuario.entity.PuestoDeTrabajoEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IPuestoDeTrabajoRepository;
@@ -48,8 +50,8 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
         
         PuestoDeTrabajoEntity puestoDeTrabajoEntity = new PuestoDeTrabajoEntity();
 
-        if (puestoDeTrabajoRepository.existsByNombre(puesto.getNombre())) {
-            throw new RuntimeException("El nombre de puesto de trabajo ya existe");
+        if (puestoDeTrabajoRepository.existsByNombreIgnoreCase(puesto.getNombre())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de puesto de trabajo ya existe");
         }
 
         puestoDeTrabajoEntity.setNombre(puesto.getNombre());
@@ -67,12 +69,12 @@ public class PuestoDeTrabajoServiceImpl implements IPuestoDeTrabajoService {
 
             PuestoDeTrabajoEntity puestoDeTrabajoEntity = optionalPuestoDeTrabajo.get();
 
-            Optional<PuestoDeTrabajoEntity> puestoDeTrabajoConMismoNombre = puestoDeTrabajoRepository.findByNombre(puesto.getNombre());
+            Optional<PuestoDeTrabajoEntity> puestoDeTrabajoConMismoNombre = puestoDeTrabajoRepository.findByNombreIgnoreCase(puesto.getNombre());
 
             if (puestoDeTrabajoConMismoNombre.isPresent()
                     && !puestoDeTrabajoConMismoNombre.get().getId().equals(id)) {
 
-                throw new RuntimeException("El puesto de trabajo ya existe");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El puesto de trabajo ya existe");
             }
 
             puestoDeTrabajoEntity.setNombre(puesto.getNombre());

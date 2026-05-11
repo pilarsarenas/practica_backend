@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import es.ediae.master.programacion.gestionusuario.entity.GeneroEntity;
 import es.ediae.master.programacion.gestionusuario.repository.IGeneroRepository;
@@ -48,8 +50,8 @@ public class GeneroServiceImpl implements IGeneroService {
       
         GeneroEntity generoEntity = new GeneroEntity();
 
-        if (generoRepository.existsByNombre(genero.getNombre())) {
-            throw new RuntimeException("El nombre de género ya existe");
+        if (generoRepository.existsByNombreIgnoreCase(genero.getNombre())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de género ya existe");
         }
 
         generoEntity.setNombre(genero.getNombre());
@@ -66,12 +68,12 @@ public class GeneroServiceImpl implements IGeneroService {
 
             GeneroEntity generoEntity = optionalGenero.get();
 
-            Optional<GeneroEntity> generoConMismoNombre = generoRepository.findByNombre(genero.getNombre());
+            Optional<GeneroEntity> generoConMismoNombre = generoRepository.findByNombreIgnoreCase(genero.getNombre());
 
             if (generoConMismoNombre.isPresent()
                     && !generoConMismoNombre.get().getId().equals(id)) {
 
-                throw new RuntimeException("El nombre de género ya existe");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de género ya existe");
             }
 
             generoEntity.setNombre(genero.getNombre());

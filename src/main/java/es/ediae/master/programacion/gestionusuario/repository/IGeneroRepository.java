@@ -12,4 +12,6 @@ import es.ediae.master.programacion.gestionusuario.entity.GeneroEntity;
 public interface IGeneroRepository extends JpaRepository<GeneroEntity, Integer> {
     Optional<GeneroEntity> findByNombre(String nombre);
     boolean existsByNombre(String nombre);
+    Optional<GeneroEntity> findByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCase(String nombre);
 }

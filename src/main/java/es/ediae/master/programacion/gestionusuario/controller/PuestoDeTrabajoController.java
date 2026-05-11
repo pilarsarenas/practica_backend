@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ediae.master.programacion.gestionusuario.service.PuestoDeTrabajoModel;
 import es.ediae.master.programacion.gestionusuario.service.impl.PuestoDeTrabajoServiceImpl;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 @RestController
 @RequestMapping("/api/v1/puestosdetrabajo")
@@ -29,7 +30,7 @@ public class PuestoDeTrabajoController {
     }
 
      @GetMapping("/{puestoDeTrabajoId}")
-    public PuestoDeTrabajoModel obtenerPuestoDeTrabajo(@PathVariable Integer puestoDeTrabajoId, @RequestParam String nickUsuario,
+    public PuestoDeTrabajoModel obtenerPuestoDeTrabajoById(@PathVariable Integer puestoDeTrabajoId, @RequestParam String nickUsuario,
             @RequestParam String nickContrasena) {
         return puestoDeTrabajoService.obtenerPuestoDeTrabajo(puestoDeTrabajoId, nickUsuario, nickContrasena);
     }

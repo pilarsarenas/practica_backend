@@ -11,4 +11,6 @@ import es.ediae.master.programacion.gestionusuario.entity.PuestoDeTrabajoEntity;
 public interface IPuestoDeTrabajoRepository extends JpaRepository<PuestoDeTrabajoEntity, Integer> {
      Optional<PuestoDeTrabajoEntity> findByNombre(String nombre);
     boolean existsByNombre(String nombre);
+    Optional<PuestoDeTrabajoEntity> findByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCase(String nombre);
 }
