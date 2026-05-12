@@ -20,8 +20,18 @@ import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 import es.ediae.master.programacion.gestionusuario.service.impl.UsuarioServiceImpl;
 
 @RestController
-@RequestMapping("/api/v1/usuarios")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", methods = {RequestMethod.OPTIONS, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@RequestMapping("/api/v1")
+@CrossOrigin(
+    origins = "http://localhost:4200",
+    allowedHeaders = "*",
+    methods = {
+        RequestMethod.GET,
+        RequestMethod.POST,
+        RequestMethod.PUT,
+        RequestMethod.DELETE,
+        RequestMethod.OPTIONS
+    }
+)
 public class UsuarioController {
 
 
@@ -35,28 +45,28 @@ public class UsuarioController {
     loginDTO.getContrasena());
     }
 
-    @GetMapping
+    @GetMapping("/usuarios")
     public List<UsuarioModel> obtenerUsuarios(@RequestParam String nickUsuario, @RequestParam String nickContrasena) {
     return usuarioService.obtenerUsuarios(nickUsuario, nickContrasena);
     }
 
-    @GetMapping("/{usuarioId}")
+    @GetMapping("/usuarios/{usuarioId}")
     public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
     return usuarioService.obtenerUsuario(usuarioId, nickUsuario, nickContrasena);
     }
 
-    @PostMapping
+    @PostMapping("/usuarios")
     public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
     return usuarioService.crearUsuario(usuario, nickUsuario, nickContrasena);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/usuarios/{id}")
     public UsuarioModel updateUsuario(@PathVariable Integer id, @RequestBody
     UsuarioModel usuario, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
     return usuarioService.actualizarUsuario(id, usuario, nickUsuario, nickContrasena);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/usuarios/{id}")
     public void eliminarUsuario(@PathVariable Integer id, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
     usuarioService.eliminarUsuario(id, nickUsuario, nickContrasena);
     }

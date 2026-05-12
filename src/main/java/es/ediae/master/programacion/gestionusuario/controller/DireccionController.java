@@ -34,7 +34,7 @@ public class DireccionController {
         return direccionService.obtenerDireccion(id, nickUsuario, nickContrasena);
     }
 
-    @PostMapping("/usuario/{usuarioId}")
+    @PostMapping
     public DireccionModel crearDireccion(@RequestBody DireccionModel direccion, @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
         return direccionService.crearDireccion(direccion, nickUsuario, nickContrasena);
     }
