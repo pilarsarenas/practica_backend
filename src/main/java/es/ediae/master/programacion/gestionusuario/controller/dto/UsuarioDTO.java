@@ -7,32 +7,56 @@ import java.time.LocalTime;
 import es.ediae.master.programacion.gestionusuario.entity.GeneroEntity;
 import es.ediae.master.programacion.gestionusuario.entity.PuestoDeTrabajoEntity;
 import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+@Schema(description = "Objeto de transferencia de datos para la gestión de usuarios")
 public class UsuarioDTO {
 
+    @Schema(description = "Identificador único del usuario", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Integer id;
+
     @NotBlank(message = "El nick de usuario es obligatorio")
+    @Schema(description = "Nombre de usuario o alias", example = "jdoe88")
     private String nickUsuario;
+
     @NotBlank(message = "La contrasena no puede estar vacía")
+    @Schema(description = "Contrasena de acceso", example = "p4ssw0rd!")
     private String contrasena;
+
     @NotNull(message = "La fecha de creación es obligatoria")
+    @Schema(description = "Fecha y hora de registro en el sistema", example = "2023-10-27T10:00:00")
     private LocalDateTime fechaHoraCreacion;
+
     @NotBlank(message = "El nombre es obligatorio")
+    @Schema(description = "Nombre", example = "John")
     private String nombre;
+
     @NotBlank(message = "El primer apellido es obligatorio")
+    @Schema(description = "Primer apellido", example = "Doe")
     private String primerApellido;
+
+    @Schema(description = "Segundo apellido (opcional)", example = "Smith")
     private String segundoApellido;
+
     @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Schema(description = "Fecha de nacimiento del usuario", example = "1990-01-01")
     private LocalDate fechaNacimiento;
+
+    @Schema(description = "Hora preferida de desayuno", example = "08:30:00")
     private LocalTime horaDesayuno;
+
     @NotNull(message = "El género es obligatorio")
+    @Schema(description = "Entidad que define el género del usuario")
     private GeneroEntity genero;
+
+    @Schema(description = "Puesto de trabajo asignado")
     private PuestoDeTrabajoEntity puestoDeTrabajo;
+
+    @Schema(description = "Indica si el usuario tiene privilegios de administrador", example = "false")
     private Boolean esAdmin;
 
-    // --- Constructores ---
     public UsuarioDTO() {
     }
 
@@ -53,7 +77,6 @@ public class UsuarioDTO {
         this.esAdmin = esAdmin;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }
@@ -164,5 +187,4 @@ public class UsuarioDTO {
                 usuarioModel.getPuestoDeTrabajo(),
                 usuarioModel.isEsAdmin());
     }
-
 }

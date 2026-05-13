@@ -1,20 +1,29 @@
 package es.ediae.master.programacion.gestionusuario.controller.dto;
 
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+@Schema(name = "DireccionPost", description = "Objeto necesario para crear una nueva dirección en el sistema")
 public class DireccionPostDTO {
+
+    @Schema(hidden = true) // Ocultamos el ID porque en un POST de creación no suele ser necesario enviarlo
     private Integer id;
-    
+
     @NotBlank(message = "El nombre de la calle es obligatorio")
+    @Schema(description = "Nombre de la calle o vía pública", example = "Calle Alhamar", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nombreCalle;
+
+    @Schema(description = "Número del inmueble", example = "42")
     private Integer numeroCalle;
+
+    @Schema(description = "Marca si la dirección debe ser la principal del usuario", example = "false")
     private Boolean direccionPrincipal;
+
+    @Schema(description = "Información del usuario propietario de la dirección")
     private UsuarioEntity usuario;
 
-    // --- Constructores ---
     public DireccionPostDTO() {
-
     }
 
     public DireccionPostDTO(String nombreCalle, Integer numeroCalle, Boolean direccionPrincipal,
@@ -23,10 +32,8 @@ public class DireccionPostDTO {
         this.numeroCalle = numeroCalle;
         this.direccionPrincipal = direccionPrincipal;
         this.usuario = usuario;
-
     }
 
-    // --- Getters y Setters ---
     public String getNombreCalle() {
         return nombreCalle;
     }
@@ -58,6 +65,4 @@ public class DireccionPostDTO {
     public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
-
 }
-

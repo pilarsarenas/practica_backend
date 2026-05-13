@@ -1,16 +1,19 @@
 package es.ediae.master.programacion.gestionusuario.controller.dto;
 
 import es.ediae.master.programacion.gestionusuario.service.GeneroModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+@Schema(description = "DTO que representa la información de un género")
 public class GeneroDTO {
-    
 
-    private Integer id; 
+    @Schema(description = "Identificador único del género", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
+    private Integer id;
+
     @NotBlank(message = "El nombre no puede estar vacío")
+    @Schema(description = "Descripción del género", example = "Masculino", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nombre;
 
-    // --- Constructores ---
     public GeneroDTO() {
     }
 
@@ -19,7 +22,6 @@ public class GeneroDTO {
         this.nombre = nombre;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }
@@ -36,11 +38,9 @@ public class GeneroDTO {
         this.nombre = nombre;
     }
 
-     public static GeneroDTO fromModel(GeneroModel generoModel) {
+    public static GeneroDTO fromModel(GeneroModel generoModel) {
         return new GeneroDTO(
                 generoModel.getId(),
-                generoModel.getNombre()
-        );
+                generoModel.getNombre());
     }
-
 }

@@ -2,33 +2,40 @@ package es.ediae.master.programacion.gestionusuario.controller.dto;
 
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 import es.ediae.master.programacion.gestionusuario.service.DireccionModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+@Schema(description = "DTO que representa la información de una dirección")
 public class DireccionDTO {
+
+    @Schema(description = "Identificador único de la dirección", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Integer id;
+
     @NotBlank(message = "El nombre de la calle es obligatorio")
+    @Schema(description = "Nombre de la vía o calle", example = "Calle Gran Vía")
     private String nombreCalle;
+
+    @Schema(description = "Número del portal o edificio", example = "25")
     private Integer numeroCalle;
+
+    @Schema(description = "Indica si es la dirección por defecto del usuario", example = "true")
     private Boolean direccionPrincipal;
+
+    @Schema(description = "Datos del usuario asociado a esta dirección")
     private UsuarioEntity usuario;
 
-    // --- Constructores ---
     public DireccionDTO() {
-
     }
 
-    public DireccionDTO(Integer id, String nombreCalle, Integer numeroCalle, Boolean direccionPrincipal, UsuarioEntity usuario) {
+    public DireccionDTO(Integer id, String nombreCalle, Integer numeroCalle, Boolean direccionPrincipal,
+            UsuarioEntity usuario) {
         this.id = id;
         this.nombreCalle = nombreCalle;
         this.numeroCalle = numeroCalle;
         this.direccionPrincipal = direccionPrincipal;
         this.usuario = usuario;
-
-
     }
 
-
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }
@@ -69,7 +76,7 @@ public class DireccionDTO {
         this.usuario = usuario;
     }
 
-      public static DireccionDTO fromModel(DireccionModel direccionModel) {
+    public static DireccionDTO fromModel(DireccionModel direccionModel) {
         return new DireccionDTO(
                 direccionModel.getId(),
                 direccionModel.getNombreCalle(),
