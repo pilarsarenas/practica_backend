@@ -25,7 +25,6 @@ public class UsuarioModel {
     private PuestoDeTrabajoEntity puestoDeTrabajo;
     private boolean esAdmin;
 
-    // --- Constructores ---
     public UsuarioModel() {}
 
     public UsuarioModel(Integer id, String nickUsuario, String contrasena, LocalDateTime fechaHoraCreacion,
@@ -45,7 +44,6 @@ public class UsuarioModel {
         this.esAdmin = esAdmin;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }
@@ -163,7 +161,7 @@ public class UsuarioModel {
         return new UsuarioModel(
             usuarioDTO.getId(),
             usuarioDTO.getNickUsuario(),
-            usuarioDTO.getContrasena(),
+            null,
             usuarioDTO.getFechaHoraCreacion(),
             usuarioDTO.getNombre(),
             usuarioDTO.getPrimerApellido(),

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.ediae.master.programacion.gestionusuario.controller.dto.UsuarioDTO;
 import es.ediae.master.programacion.gestionusuario.controller.dto.UsuarioPostDTO;
 import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 import es.ediae.master.programacion.gestionusuario.service.impl.UsuarioServiceImpl;
@@ -48,32 +49,38 @@ public class UsuarioController {
 
     @Operation(summary = "Obtener todos los usuarios", description = "Lista todos los perfiles de usuario (requiere credenciales de admin).")
     @GetMapping("/usuarios")
-    public List<UsuarioModel> obtenerUsuarios(@RequestParam String nickUsuario, @RequestParam String nickContrasena) {
-        return usuarioService.obtenerUsuarios(nickUsuario, nickContrasena);
+    public List<UsuarioDTO> obtenerUsuarios(@RequestParam String nickUsuario, @RequestParam String nickContrasena) {
+        return usuarioService.obtenerUsuarios(nickUsuario, nickContrasena)
+                .stream()
+                .map(UsuarioDTO::fromModel)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     @Operation(summary = "Obtener usuario por ID", description = "Recupera la información detallada de un usuario específico.")
     @ApiResponse(responseCode = "200", description = "Usuario encontrado")
     @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     @GetMapping("/usuarios/{usuarioId}")
-    public UsuarioModel obtenerUsuario(@PathVariable Integer usuarioId, @RequestParam String nickUsuario,
+    public UsuarioDTO obtenerUsuario(@PathVariable Integer usuarioId, @RequestParam String nickUsuario,
             @RequestParam String nickContrasena) {
-        return usuarioService.obtenerUsuario(usuarioId, nickUsuario, nickContrasena);
+        return UsuarioDTO.fromModel(
+                usuarioService.obtenerUsuario(usuarioId, nickUsuario, nickContrasena));
     }
 
     @Operation(summary = "Crear nuevo usuario", description = "Registra un nuevo usuario en la base de datos.")
     @ApiResponse(responseCode = "201", description = "Usuario creado con éxito")
     @PostMapping("/usuarios")
-    public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario, @RequestParam String nickUsuario,
+    public UsuarioDTO crearUsuario(@RequestBody UsuarioModel usuario, @RequestParam String nickUsuario,
             @RequestParam String nickContrasena) {
-        return usuarioService.crearUsuario(usuario, nickUsuario, nickContrasena);
+        return UsuarioDTO.fromModel(
+                usuarioService.crearUsuario(usuario, nickUsuario, nickContrasena));
     }
 
     @Operation(summary = "Actualizar usuario", description = "Modifica los datos de un usuario existente.")
     @PutMapping("/usuarios/{id}")
-    public UsuarioModel updateUsuario(@PathVariable Integer id, @RequestBody UsuarioModel usuario,
+    public UsuarioDTO updateUsuario(@PathVariable Integer id, @RequestBody UsuarioModel usuario,
             @RequestParam String nickUsuario, @RequestParam String nickContrasena) {
-        return usuarioService.actualizarUsuario(id, usuario, nickUsuario, nickContrasena);
+        return UsuarioDTO.fromModel(
+                usuarioService.actualizarUsuario(id, usuario, nickUsuario, nickContrasena));
     }
 
     @Operation(summary = "Eliminar usuario", description = "Borra físicamente el registro del usuario del sistema.")

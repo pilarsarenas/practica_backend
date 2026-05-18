@@ -108,6 +108,8 @@ public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String n
         UsuarioRepository.deleteById(id);
     }
 
+    
+
     @Override
     public boolean iniciarSesion(String nickUsuario, String contrasena) {
         return UsuarioRepository

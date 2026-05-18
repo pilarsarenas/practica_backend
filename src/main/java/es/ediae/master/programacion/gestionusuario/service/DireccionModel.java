@@ -13,7 +13,6 @@ import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
     private Boolean direccionPrincipal;
     private UsuarioEntity usuario;
 
-    // --- Constructores ---
     public DireccionModel() {
     }      
 
@@ -25,7 +24,6 @@ import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
         this.usuario = usuario;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }   
