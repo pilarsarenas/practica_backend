@@ -161,7 +161,7 @@ public class UsuarioModel {
         return new UsuarioModel(
             usuarioDTO.getId(),
             usuarioDTO.getNickUsuario(),
-            null,
+            usuarioDTO.getContrasena(),
             usuarioDTO.getFechaHoraCreacion(),
             usuarioDTO.getNombre(),
             usuarioDTO.getPrimerApellido(),

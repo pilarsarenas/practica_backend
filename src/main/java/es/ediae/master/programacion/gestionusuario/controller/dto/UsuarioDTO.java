@@ -21,6 +21,9 @@ public class UsuarioDTO {
     @Schema(description = "Nombre de usuario o alias", example = "jdoe88")
     private String nickUsuario;
 
+    @NotBlank(message = "La contrasena no puede estar vacía")
+    @Schema(description = "Contrasena de acceso", example = "p4ssw0rd!")
+    private String contrasena;
 
     @NotNull(message = "La fecha de creación es obligatoria")
     @Schema(description = "Fecha y hora de registro en el sistema", example = "2023-10-27T10:00:00")
@@ -88,6 +91,14 @@ public class UsuarioDTO {
 
     public void setNickUsuario(String nickUsuario) {
         this.nickUsuario = nickUsuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public LocalDateTime getFechaHoraCreacion() {
