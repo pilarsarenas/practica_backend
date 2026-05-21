@@ -25,7 +25,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public List<UsuarioModel> obtenerUsuarios(String nickUsuario, String nickContrasena) {
-         loginService.verificar(nickUsuario, nickContrasena);
+        loginService.verificar(nickUsuario, nickContrasena);
         return UsuarioRepository.findAll().stream()
                 .map(UsuarioModel::fromEntity)
                 .toList();
@@ -33,7 +33,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public UsuarioModel obtenerUsuario(Integer id, String nickUsuario, String nickContrasena) {
-         loginService.verificar(nickUsuario, nickContrasena);
+        loginService.verificar(nickUsuario, nickContrasena);
         return UsuarioRepository.findById(id)
                 .map(UsuarioModel::fromEntity)
                 .orElse(null);
@@ -41,13 +41,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public UsuarioModel crearUsuario(UsuarioModel usuario, String nickUsuario, String nickContrasena) {
-         loginService.verificar(nickUsuario, nickContrasena);
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        loginService.verificar(nickUsuario, nickContrasena);
 
         if (UsuarioRepository.existsByNickUsuario(usuario.getNickUsuario())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nickUsuario ya existe");
         }
 
+        UsuarioEntity usuarioEntity = new UsuarioEntity();
         usuarioEntity.setNickUsuario(usuario.getNickUsuario());
         usuarioEntity.setContrasena(usuario.getContrasena());
         usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
@@ -61,46 +61,47 @@ public class UsuarioServiceImpl implements IUsuarioService {
         usuarioEntity.setEsAdmin(usuario.isEsAdmin());
 
         return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
-
     }
 
-@Override
-public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String nickUsuario, String nickContrasena) {
-    loginService.verificar(nickUsuario, nickContrasena);
-    Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
+    @Override
+    public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String nickUsuario, String nickContrasena) {
+        loginService.verificar(nickUsuario, nickContrasena);
+        Optional<UsuarioEntity> optionalUsuario = UsuarioRepository.findById(id);
 
-    if (optionalUsuario.isPresent()) {
+        if (optionalUsuario.isPresent()) {
+            UsuarioEntity usuarioEntity = optionalUsuario.get();
 
-        UsuarioEntity usuarioEntity = optionalUsuario.get();
+            Optional<UsuarioEntity> usuarioConMismoNick =
+                    UsuarioRepository.findByNickUsuario(usuario.getNickUsuario());
 
-        Optional<UsuarioEntity> usuarioConMismoNick =
-                UsuarioRepository.findByNickUsuario(usuario.getNickUsuario());
+            if (usuarioConMismoNick.isPresent()
+                    && !usuarioConMismoNick.get().getId().equals(id)) {
+                throw new RuntimeException("El nickUsuario ya existe");
+            }
 
-        if (usuarioConMismoNick.isPresent()
-                && !usuarioConMismoNick.get().getId().equals(id)) {
+            usuarioEntity.setNickUsuario(usuario.getNickUsuario());
 
-            throw new RuntimeException("El nickUsuario ya existe");
+            // ✅ Si la contraseña viene vacía o null, mantenemos la que ya tiene
+            if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
+                usuarioEntity.setContrasena(usuario.getContrasena());
+            }
+
+            usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
+            usuarioEntity.setNombre(usuario.getNombre());
+            usuarioEntity.setPrimerApellido(usuario.getPrimerApellido());
+            usuarioEntity.setSegundoApellido(usuario.getSegundoApellido());
+            usuarioEntity.setFechaNacimiento(usuario.getFechaNacimiento());
+            usuarioEntity.setHoraDesayuno(usuario.getHoraDesayuno());
+            usuarioEntity.setGenero(usuario.getGenero());
+            usuarioEntity.setPuestoDeTrabajo(usuario.getPuestoDeTrabajo());
+            usuarioEntity.setEsAdmin(usuario.isEsAdmin());
+
+            return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
+
+        } else {
+            return null;
         }
-
-        usuarioEntity.setNickUsuario(usuario.getNickUsuario());
-        usuarioEntity.setContrasena(usuario.getContrasena());
-        usuarioEntity.setFechaHoraCreacion(usuario.getFechaHoraCreacion());
-        usuarioEntity.setNombre(usuario.getNombre());
-        usuarioEntity.setPrimerApellido(usuario.getPrimerApellido());
-        usuarioEntity.setSegundoApellido(usuario.getSegundoApellido());
-        usuarioEntity.setFechaNacimiento(usuario.getFechaNacimiento());
-        usuarioEntity.setHoraDesayuno(usuario.getHoraDesayuno());
-        usuarioEntity.setGenero(usuario.getGenero());
-        usuarioEntity.setPuestoDeTrabajo(usuario.getPuestoDeTrabajo());
-        usuarioEntity.setEsAdmin(usuario.isEsAdmin());
-
-        return UsuarioModel.fromEntity(UsuarioRepository.save(usuarioEntity));
-
-    } else {
-
-        return null;
     }
-}
 
     @Override
     public void eliminarUsuario(Integer id, String nickUsuario, String nickContrasena) {
@@ -108,13 +109,10 @@ public UsuarioModel actualizarUsuario(Integer id, UsuarioModel usuario, String n
         UsuarioRepository.deleteById(id);
     }
 
-    
-
     @Override
     public boolean iniciarSesion(String nickUsuario, String contrasena) {
         return UsuarioRepository
                 .findByNickUsuarioAndContrasena(nickUsuario, contrasena)
                 .isPresent();
     }
-
 }

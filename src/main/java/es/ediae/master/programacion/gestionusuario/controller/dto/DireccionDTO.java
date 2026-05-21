@@ -1,14 +1,14 @@
 package es.ediae.master.programacion.gestionusuario.controller.dto;
 
-import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 import es.ediae.master.programacion.gestionusuario.service.DireccionModel;
+import es.ediae.master.programacion.gestionusuario.service.UsuarioModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 @Schema(description = "DTO que representa la información de una dirección")
 public class DireccionDTO {
 
-    @Schema(description = "Identificador único de la dirección", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(description = "Identificador único de la dirección", example = "1")
     private Integer id;
 
     @NotBlank(message = "El nombre de la calle es obligatorio")
@@ -22,13 +22,11 @@ public class DireccionDTO {
     private Boolean direccionPrincipal;
 
     @Schema(description = "Datos del usuario asociado a esta dirección")
-    private UsuarioEntity usuario;
+    private UsuarioDTO usuario; 
 
-    public DireccionDTO() {
-    }
+    public DireccionDTO() {}
 
-    public DireccionDTO(Integer id, String nombreCalle, Integer numeroCalle, Boolean direccionPrincipal,
-            UsuarioEntity usuario) {
+    public DireccionDTO(Integer id, String nombreCalle, Integer numeroCalle, Boolean direccionPrincipal, UsuarioDTO usuario) {
         this.id = id;
         this.nombreCalle = nombreCalle;
         this.numeroCalle = numeroCalle;
@@ -36,52 +34,35 @@ public class DireccionDTO {
         this.usuario = usuario;
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getNombreCalle() { return nombreCalle; }
+    public void setNombreCalle(String nombreCalle) { this.nombreCalle = nombreCalle; }
 
-    public String getNombreCalle() {
-        return nombreCalle;
-    }
+    public Integer getNumeroCalle() { return numeroCalle; }
+    public void setNumeroCalle(Integer numeroCalle) { this.numeroCalle = numeroCalle; }
 
-    public void setNombreCalle(String nombreCalle) {
-        this.nombreCalle = nombreCalle;
-    }
+    public Boolean getDireccionPrincipal() { return direccionPrincipal; }
+    public void setDireccionPrincipal(Boolean direccionPrincipal) { this.direccionPrincipal = direccionPrincipal; }
 
-    public Integer getNumeroCalle() {
-        return numeroCalle;
-    }
-
-    public void setNumeroCalle(Integer numeroCalle) {
-        this.numeroCalle = numeroCalle;
-    }
-
-    public Boolean getDireccionPrincipal() {
-        return direccionPrincipal;
-    }
-
-    public void setDireccionPrincipal(Boolean direccionPrincipal) {
-        this.direccionPrincipal = direccionPrincipal;
-    }
-
-    public UsuarioEntity getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioEntity usuario) {
-        this.usuario = usuario;
-    }
+    public UsuarioDTO getUsuario() { return usuario; }
+    public void setUsuario(UsuarioDTO usuario) { this.usuario = usuario; }
 
     public static DireccionDTO fromModel(DireccionModel direccionModel) {
-        return new DireccionDTO(
-                direccionModel.getId(),
-                direccionModel.getNombreCalle(),
-                direccionModel.getNumeroCalle(),
-                direccionModel.getDireccionPrincipal(),
-                direccionModel.getUsuario());
+    UsuarioDTO usuarioDTO = null;
+    if (direccionModel.getUsuario() != null) {
+        usuarioDTO = UsuarioDTO.fromModel(
+            UsuarioModel.fromEntity(direccionModel.getUsuario())
+        );
     }
+
+    return new DireccionDTO(
+            direccionModel.getId(),
+            direccionModel.getNombreCalle(),
+            direccionModel.getNumeroCalle(),
+            direccionModel.getDireccionPrincipal(),
+            usuarioDTO);
+}
+
 }

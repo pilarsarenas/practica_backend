@@ -10,7 +10,6 @@ public class PuestoDeTrabajoModel {
     private Integer id;
     private String nombre;
 
-    // --- Constructores ---
     public PuestoDeTrabajoModel() {
     }
 
@@ -19,7 +18,6 @@ public class PuestoDeTrabajoModel {
         this.nombre = nombre;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 @Schema(name = "GeneroPost", description = "Datos requeridos para registrar un nuevo género")
 public class GeneroPostDTO {
 
-    @Schema(hidden = true) // El ID no se envía en un POST de creación, se autogenera
+    @Schema(hidden = true) 
     private Integer id;
 
     @NotBlank(message = "El nombre no puede estar vacío")
@@ -21,7 +21,6 @@ public class GeneroPostDTO {
         this.nombre = nombre;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }

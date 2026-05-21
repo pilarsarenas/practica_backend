@@ -56,12 +56,9 @@ public class UsuarioEntity {
     @JoinColumn(name = "puesto_de_trabajo_id", nullable = true)
     private PuestoDeTrabajoEntity puestoDeTrabajo;
 
-    // --- Constructores ---
     public UsuarioEntity() {
     }
 
-
-    // --- Getters y Setters ---
 
     public Integer getId() {
         return id;

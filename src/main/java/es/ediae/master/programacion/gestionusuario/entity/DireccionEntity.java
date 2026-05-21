@@ -29,11 +29,9 @@ public class DireccionEntity {
     @JoinColumn(name = "usuario_id", nullable = false)
     private UsuarioEntity usuario;
 
-    // --- Constructores ---
     public DireccionEntity() {
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }

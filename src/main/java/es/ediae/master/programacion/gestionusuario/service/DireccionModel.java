@@ -5,7 +5,7 @@ import es.ediae.master.programacion.gestionusuario.controller.dto.DireccionPostD
 import es.ediae.master.programacion.gestionusuario.entity.DireccionEntity;
 import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
 
- public class DireccionModel {
+public class DireccionModel {
 
     private Integer id;
     private String nombreCalle;
@@ -13,8 +13,7 @@ import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
     private Boolean direccionPrincipal;
     private UsuarioEntity usuario;
 
-    public DireccionModel() {
-    }      
+    public DireccionModel() {}
 
     public DireccionModel(Integer id, String nombreCalle, Integer numeroCalle, Boolean direccionPrincipal, UsuarioEntity usuario) {
         this.id = id;
@@ -24,57 +23,48 @@ import es.ediae.master.programacion.gestionusuario.entity.UsuarioEntity;
         this.usuario = usuario;
     }
 
-    public Integer getId() {
-        return id;
-    }   
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getNombreCalle() { return nombreCalle; }
+    public void setNombreCalle(String nombreCalle) { this.nombreCalle = nombreCalle; }
 
-    public String getNombreCalle() {
-        return nombreCalle;
-    }
+    public Integer getNumeroCalle() { return numeroCalle; }
+    public void setNumeroCalle(Integer numeroCalle) { this.numeroCalle = numeroCalle; }
 
-    public void setNombreCalle(String nombreCalle) {
-        this.nombreCalle = nombreCalle;
-    }
+    public Boolean getDireccionPrincipal() { return direccionPrincipal; }
+    public void setDireccionPrincipal(Boolean direccionPrincipal) { this.direccionPrincipal = direccionPrincipal; }
 
-    public Integer getNumeroCalle() {
-        return numeroCalle;
-    }
-
-    public void setNumeroCalle(Integer numeroCalle) {
-        this.numeroCalle = numeroCalle;
-    }
-
-    public Boolean getDireccionPrincipal() {
-        return direccionPrincipal;
-    }
-
-    public void setDireccionPrincipal(Boolean direccionPrincipal) {
-        this.direccionPrincipal = direccionPrincipal;
-    }
-
-    public UsuarioEntity getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioEntity usuario) {
-        this.usuario = usuario;
-    }
+    public UsuarioEntity getUsuario() { return usuario; }
+    public void setUsuario(UsuarioEntity usuario) { this.usuario = usuario; }
 
     public static DireccionModel fromEntity(DireccionEntity direccionEntity) {
-        return new DireccionModel(direccionEntity.getId(), direccionEntity.getNombreCalle(), direccionEntity.getNumeroCalle(), direccionEntity.getDireccionPrincipal(), direccionEntity.getUsuario());
+        return new DireccionModel(
+            direccionEntity.getId(),
+            direccionEntity.getNombreCalle(),
+            direccionEntity.getNumeroCalle(),
+            direccionEntity.getDireccionPrincipal(),
+            direccionEntity.getUsuario()
+        );
     }
 
     public static DireccionModel fromDTO(DireccionDTO direccionDTO) {
-        return new DireccionModel(direccionDTO.getId(), direccionDTO.getNombreCalle(), direccionDTO.getNumeroCalle(), direccionDTO.getDireccionPrincipal(), direccionDTO.getUsuario());
+        return new DireccionModel(
+            direccionDTO.getId(),
+            direccionDTO.getNombreCalle(),
+            direccionDTO.getNumeroCalle(),
+            direccionDTO.getDireccionPrincipal(),
+            null // ← no podemos convertir UsuarioDTO a UsuarioEntity aquí
+        );
     }
 
     public static DireccionModel fromPostDTO(DireccionPostDTO direccionPostDTO) {
-        return new DireccionModel(null, direccionPostDTO.getNombreCalle(), direccionPostDTO.getNumeroCalle(), direccionPostDTO.getDireccionPrincipal(), direccionPostDTO.getUsuario());
+        return new DireccionModel(
+            null,
+            direccionPostDTO.getNombreCalle(),
+            direccionPostDTO.getNumeroCalle(),
+            direccionPostDTO.getDireccionPrincipal(),
+            direccionPostDTO.getUsuario()
+        );
     }
-
-
 }

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 @Schema(name = "DireccionPost", description = "Objeto necesario para crear una nueva dirección en el sistema")
 public class DireccionPostDTO {
 
-    @Schema(hidden = true) // Ocultamos el ID porque en un POST de creación no suele ser necesario enviarlo
+    @Schema(hidden = true) 
     private Integer id;
 
     @NotBlank(message = "El nombre de la calle es obligatorio")

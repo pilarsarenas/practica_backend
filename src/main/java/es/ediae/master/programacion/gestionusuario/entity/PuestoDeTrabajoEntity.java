@@ -17,10 +17,8 @@ public class PuestoDeTrabajoEntity {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    // --- Constructores ---
     public PuestoDeTrabajoEntity() {}
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }

@@ -17,7 +17,6 @@ public class GeneroEntity {
     @Column(nullable = false, unique = true)
     private String nombre;
 
-    // --- Constructores ---
     public GeneroEntity() {}
 
     public GeneroEntity(Integer id, String nombre) {
@@ -25,7 +24,6 @@ public class GeneroEntity {
         this.nombre = nombre;
     }
 
-    // --- Getters y Setters ---
     public Integer getId() {
         return id;
     }
